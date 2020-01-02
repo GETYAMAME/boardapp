@@ -36,7 +36,6 @@ class App extends Component {
  createPost = async () => {
     // バリデーションチェック
     if (this.state.title === '' || this.state.content === '') return
-
     // 新規登録 mutation
     const createPostInput = {
       title: this.state.title,
@@ -79,4 +78,3 @@ class App extends Component {
 }
 
 export default App;
-
