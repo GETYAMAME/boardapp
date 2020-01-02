@@ -3,6 +3,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { listPosts } from './graphql/queries';
 import { createPost } from './graphql/mutations';
 import { onCreatePost } from './graphql/subscriptions';
+import { withAuthenticator } from "aws-amplify-react";
 
 class App extends Component {
 
@@ -32,15 +33,6 @@ class App extends Component {
       }
     })
   }
-
- createPost = async () => {
-    // バリデーションチェック
-    if (this.state.title === '' || this.state.content === '') return
-    // 新規登録 mutation
-    const createPostInput = {
-      title: this.state.title,
-      content: this.state.content
-    }
 
     // 登録処理
     try {
@@ -77,4 +69,5 @@ class App extends Component {
 
 }
 
-export default App;
+//export default App;
+export default withAuthenticator(App, {includeGreeting: true});
