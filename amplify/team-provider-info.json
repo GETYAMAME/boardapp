@@ -10,6 +10,11 @@
             "StackName": "amplify-boardapp-dev-32634",
             "StackId": "arn:aws:cloudformation:us-west-2:969258768067:stack/amplify-boardapp-dev-32634/ea995290-2b31-11ea-8b83-068a25e2e0ea",
             "AmplifyAppId": "d2e0pzejl5z6jj"
+        },
+        "categories": {
+            "auth": {
+                "boardapp119493e5": {}
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { listPosts } from './graphql/queries';
 import { createPost } from './graphql/mutations';
 import { onCreatePost } from './graphql/subscriptions';
+import { withAuthenticator } from "aws-amplify-react";
 
 class App extends Component {
 
@@ -77,4 +78,5 @@ class App extends Component {
 
 }
 
-export default App;
+//export default App;
+export default withAuthenticator(App, {includeGreeting: true});
