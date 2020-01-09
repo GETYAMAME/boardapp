@@ -3,7 +3,6 @@ import { API, graphqlOperation } from "aws-amplify";
 import { listPosts } from './graphql/queries';
 import { createPost } from './graphql/mutations';
 import { onCreatePost } from './graphql/subscriptions';
-import { withAuthenticator } from "aws-amplify-react";
 
 class App extends Component {
 
@@ -34,40 +33,47 @@ class App extends Component {
     })
   }
 
-    // 登録処理
-    try {
-      const posts = [...this.state.posts, createPostInput]
-      this.setState({ posts: posts, title: "", content: "" })
-      await API.graphql(graphqlOperation(createPost, { input: createPostInput }))
-      console.log('createPostInput: ', createPostInput)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  createPost = async () => {
+     // バリデーションチェック
+     if (this.state.title === '' || this.state.content === '') return
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+     // 新規登録 mutation
+     const createPostInput = {
+       title: this.state.title,
+       content: this.state.content
+     }
 
-  render (){
-    return (
-      <div className="App">
-        <div>
-          title
-          <input value={this.state.title} name="title" onChange={this.onChange}></input>
-        </div>
-        <div>
-          content
-          <input value={this.state.content} name="content" onChange={this.onChange}></input>
-        </div>
-        <button onClick={this.createPost}>submit</button>
-        // ↓この行を追加
-        {this.state.posts.map((post,idx) => {return <div key={idx}><div>title: {post.title}</div><div>content:, {post.content}</div></div>})}
-      </div>
-    );
-  }
+     // 登録処理
+     try {
+       const posts = [...this.state.posts, createPostInput]
+       this.setState({ posts: posts, title: "", content: "" })
+       await API.graphql(graphqlOperation(createPost, { input: createPostInput }))
+       console.log('createPostInput: ', createPostInput)
+     } catch (e) {
+       console.log(e)
+     }
+   }
 
-}
+   onChange = e => {
+     this.setState({ [e.target.name]: e.target.value })
+   }
 
-//export default App;
-export default withAuthenticator(App, {includeGreeting: true});
+   render (){
+     return (
+       <div className="App">
+         <div>
+           title
+           <input value={this.state.title} name="title" onChange={this.onChange}></input>
+         </div>
+         <div>
+           content
+           <input value={this.state.content} name="content" onChange={this.onChange}></input>
+         </div>
+         <button onClick={this.createPost}>submit</button>
+         // ↓この行を追加
+         {this.state.posts.map((post,idx) => {return <div key={idx}><div>title: {post.title}</div><div>content:, {post.content}</div></div>})}
+       </div>
+     );
+   }
+ }
+export default App;
